@@ -5,28 +5,20 @@
 
 int main()
 {
-    InitWindow(400, 200, "raygui - controls test suite");
-    SetTargetFPS(60);
+    const float width = 1060;
+    const float height = 540;
 
-    bool showMessageBox = false;
+    InitWindow(width, height, "Kairo");
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
+
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
 
-            if (GuiButton((Rectangle){ 24, 24, 120, 30 }, "#191#Show Message")) showMessageBox = true;
-
-            if (showMessageBox)
-            {
-                int btnActive = -1;
-                GuiMessageBox((Rectangle){ 85, 70, 250, 100 },
-                    "#191#Message Box", "Hi! This is a message!", "Nice;Cool", &btnActive);
-
-                if (btnActive >= 0) showMessageBox = false;
-            }
+            GuiButton((Rectangle){ 24, 24, 120, 30 }, "Start");
+            GuiButton((Rectangle){ width/10, 24, 120, 30 }, "End");
 
         EndDrawing();
     }
