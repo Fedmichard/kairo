@@ -1,0 +1,9 @@
+* 2 cards left/right
+  - Left card is going to have the rank information with a background that matches the color theme
+    - Date: Ex: Tuesday, Sep 22, 2026
+    - Time: Ex: 01:22 PM
+    - Accumulated hours: Ex: 2132 Hours
+    - Rank at the center
+      - CHAMPION I
+      - DIVISION II
+      - Progress bar
