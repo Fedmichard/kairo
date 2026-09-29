@@ -7,11 +7,12 @@
 const float width = 1060.f;
 const float height = 540.f;
 
+// COLORS
+const Color Background{ .r = 216, .g = 216, .b = 216, .a = 1 };
+
 // Function Declarations
 void DrawLeftPanel();
-
 void DrawRightPanel();
-
 
 // Main Function
 int main()
@@ -23,7 +24,7 @@ int main()
     {
         BeginDrawing();
 
-            ClearBackground(GetColor(999999)); 
+            ClearBackground(Background); 
 
             // GuiDisable(); --Can be used later on to disable GUI input?
             // ------------ LEFT PANEL -----------------
@@ -42,11 +43,11 @@ int main()
 // Function Definitions
 void DrawRightPanel() {
     Rectangle bounds { (width/2.f + width/225.f), (height/75.f), (width/2.f) - 10.f, (height/1.005f) - 10.f };
-    GuiWindowBox(bounds, "Right Panel");
+    GuiGroupBox(bounds, "Right Panel");
 }
 
 void DrawLeftPanel() {
     Rectangle bounds { (width/125.f), (height/75.f), (width/2.f) - 10.f, (height/1.005f) - 10.f };
-    GuiWindowBox(bounds, "Left Panel");
+    // GuiGroupBox(bounds, "Left Panel");
+    // GuiWindowBox(bounds, "Left Panel");
 }
-
