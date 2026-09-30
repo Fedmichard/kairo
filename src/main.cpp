@@ -3,91 +3,69 @@
 #define RAYGUI_IMPLEMENTATION
 #include "../libs/raygui.h"
 
-// Global constants
+// Global Constats
 const float width = 1060.f;
 const float height = 540.f;
 
 // COLORS
 const Color Background{ .r = 216, .g = 216, .b = 216, .a = 1 };
-const Color RIGHT_PANEL_COLOR{ .r = 240, .g = 245, .b = 250, .a = 1 };
 
 // Function Declarations
 void DrawLeftPanel();
 void DrawRightPanel();
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
 int main()
 {
-    // Initialization
-    //---------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 600;
-    
-    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
-    InitWindow(screenWidth, screenHeight, "raygui - portable window");
+    const float width = 1060;
+    const float height = 540;
 
-    // General variables
-    Vector2 mousePosition = { 0 };
-    Vector2 windowPosition = { 500, 200 };
-    Vector2 panOffset = mousePosition;
-    bool dragWindow = false;
-    
-    SetWindowPosition(windowPosition.x, windowPosition.y);
-    
-    bool exitWindow = false;
-    
+    InitWindow(width, height, "Kairo");
     SetTargetFPS(60);
-    //--------------------------------------------------------------------------------------
 
-    // Main game loop
-    while (!exitWindow && !WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        mousePosition = GetMousePosition();
-        
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !dragWindow)
-        {
-            if (CheckCollisionPointRec(mousePosition, (Rectangle){ 0, 0, screenWidth, 20 }))
-            {
-                windowPosition = GetWindowPosition();
-                dragWindow = true;
-                panOffset = mousePosition;
-            }
-        }
-
-        if (dragWindow)
-        {            
-            windowPosition.x += (mousePosition.x - panOffset.x);
-            windowPosition.y += (mousePosition.y - panOffset.y);
-
-            SetWindowPosition((int)windowPosition.x, (int)windowPosition.y);
-            
-            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) dragWindow = false;
-        }
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(Background);
 
-            exitWindow = GuiWindowBox((Rectangle){ 0, 0, screenWidth, screenHeight }, "#198# PORTABLE WINDOW");
-            
-            DrawText(TextFormat("Mouse Position: [ %.0f, %.0f ]", mousePosition.x, mousePosition.y), 10, 40, 10, DARKGRAY);
-            DrawText(TextFormat("Window Position: [ %.0f, %.0f ]", windowPosition.x, windowPosition.y), 10, 60, 10, DARKGRAY);
+            // GuiDisable(); --Can be used later on to disable GUI input?
+            // ------------ LEFT PANEL -----------------
+            DrawLeftPanel();
+
+            // ------------ RIGHT PANEL -----------------
+            DrawRightPanel();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
-
+    CloseWindow();
     return 0;
 }
+
+// Function Definitions
+void DrawRightPanel() {
+    float panelPosX { (width/2.f) + (width/225.f) };
+    float panelPosY { height/75.f };
+    float panelWidth { (width/2.f) - 10.f };
+    float panelHeight { (height/1.005f) - 10.f };
+
+    Rectangle panel { panelPosX, panelPosY, panelWidth, panelHeight };
+    GuiGroupBox(panel, "Right Panel");
+
+    // Maybe I should make this a slider inside the application for debugging and creating? Maybe that'll be the next steps of this project, that'd be cool
+    // Figure out what is panelPosX in debugger? Why is it shifted so much to the right even though it should only be 25?
+    // Figure out the math, this should've worked
+    float startButtonPosX = panelPosX + 25.f;
+    float startButtonPosY = panelPosY + 100.f;
+    Rectangle startButtonBounds { startButtonPosX, startButtonPosY, 200.f, 75.f };
+    GuiButton(startButtonBounds, "START / PAUSE");
+
+    Rectangle endButtonBounds { startButtonPosX + 200.f + 75.f, startButtonPosY, 200.f, 75.f };
+    GuiButton(endButtonBounds, "END SESSION");
+}
+
+void DrawLeftPanel() {
+    Rectangle bounds { (width/125.f), (height/75.f), (width/2.f) - 10.f, (height/1.005f) - 10.f };
+    GuiGroupBox(bounds, "Left Panel");
+}
+
