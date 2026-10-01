@@ -55,7 +55,7 @@ void DrawRightPanel() {
     // Maybe I should make this a slider inside the application for debugging and creating? Maybe that'll be the next steps of this project, that'd be cool
     // Figure out what is panelPosX in debugger? Why is it shifted so much to the right even though it should only be 25?
     // Figure out the math, this should've worked
-    float startButtonPosX = panelPosX + 25.f;
+    float startButtonPosX = panelPosX + 22.5f;
     float startButtonPosY = panelPosY + 100.f;
     Rectangle startButtonBounds { startButtonPosX, startButtonPosY, 200.f, 75.f };
     GuiButton(startButtonBounds, "START / PAUSE");
