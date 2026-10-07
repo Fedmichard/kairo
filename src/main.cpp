@@ -62,6 +62,8 @@ int main()
 
 // Function Definitions
 void DrawRightPanel(std::string time) {
+    const char* timeConv = time.c_str();
+
     float panelPosX { (width/2.f) + (width/225.f) };
     float panelPosY { height/75.f };
     float panelWidth { (width/2.f) - 10.f };
@@ -71,8 +73,8 @@ void DrawRightPanel(std::string time) {
     GuiGroupBox(panel, "Right Panel");
 
     // Time
-    Rectangle timePanel { panelPosX + 22.5f, panelPosY + 25.f, 200.f, 100.f };
-    GuiLabel(timePanel, "Yo");
+    Color timeColor { .r = 255, .g = 255, .b = 0, .a = 255 };
+    DrawText(timeConv, panelPosX + 22.f, panelPosY + 25.f, 40, timeColor);
 
     // Maybe I should make this a slider inside the application for debugging and creating? Maybe that'll be the next steps of this project, that'd be cool
     // Figure out what is panelPosX in debugger? Why is it shifted so much to the right even though it should only be 25?
