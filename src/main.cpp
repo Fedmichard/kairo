@@ -66,6 +66,7 @@ void DrawRightPanel() {
 
     // Maybe I should make this a slider inside the application for debugging and creating? Maybe that'll be the next steps of this project, that'd be cool
     // Figure out what is panelPosX in debugger? Why is it shifted so much to the right even though it should only be 25?
+    // Forgot to mention
     // Figure out the math, this should've worked
     float startButtonPosX = panelPosX + 22.5f;
     float startButtonPosY = panelPosY + 100.f;
