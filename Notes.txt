@@ -1,3 +1,6 @@
+Compiled logic: clang++ ./src/kairo.cpp ./libs/ImGUI/imgui.cpp ./libs/ImGUI/imgui_impl_sdl3.cpp ./libs/ImGUI/imgui_impl_vulkan.cpp ./libs/ImGUI/imgui_draw.cpp ./libs/ImGUI/imgui_tables.cpp ./libs/ImGUI/imgui_demo.cpp ./libs/ImGUI/imgui_widgets.cpp
+ -o ./build/demo.exe -IC:/VulkanSDK/1.4.363.0/Include -LC:/VulkanSDK/1.4.363.0/Lib -lSDL3 -lvulkan-1
+
 * 2 cards left/right
   - Left card is going to have the rank information with a background that matches the color theme
     - Date: Ex: Tuesday, Sep 22, 2026
@@ -7,5 +10,3 @@
       - CHAMPION I
       - DIVISION II
       - Progress bar
-
-*********** NEED TO LOOK INTO NEW GUI 
