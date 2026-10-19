@@ -345,6 +345,10 @@ static void FramePresent(ImGui_ImplVulkanH_Window* wd)
 // Main code
 int main(int, char**)
 {
+    // Window Height / Width
+    const int height { 1060 };
+    const int width { 600 };
+
     // Setup SDL
     // [If using SDL_MAIN_USE_CALLBACKS: all code below until the main loop starts would likely be your SDL_AppInit() function]
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD))
@@ -356,7 +360,7 @@ int main(int, char**)
     // Create window with Vulkan graphics context
     float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay());
     SDL_WindowFlags window_flags = SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN | SDL_WINDOW_HIGH_PIXEL_DENSITY;
-    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL3+Vulkan example", (int)(1060 * main_scale), (int)(600 * main_scale), window_flags);
+    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL3+Vulkan example", (int)(height * main_scale), (int)(width * main_scale), window_flags);
     if (window == nullptr)
     {
         printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
@@ -446,7 +450,7 @@ int main(int, char**)
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
 
     // Main loop
     bool done = false;
@@ -498,25 +502,55 @@ int main(int, char**)
         }
 
         {
+            static bool no_titlebar = true;
+            static bool no_scrollbar = true;
+            static bool no_menu = true;
+            static bool no_move = true;
+            static bool no_resize = true;
+            static bool no_collapse = true;
+            static bool no_close = true;
+            static bool no_nav = true;
+            static bool no_background = false;
+            static bool no_bring_to_front = false;
+            static bool unsaved_document = false;
+            static bool p_open = true;
+
+            ImGuiWindowFlags window_flags { 0 };
+            if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
+            if (no_scrollbar)       window_flags |= ImGuiWindowFlags_NoScrollbar;
+            if (!no_menu)           window_flags |= ImGuiWindowFlags_MenuBar;
+            if (no_move)            window_flags |= ImGuiWindowFlags_NoMove;
+            if (no_resize)          window_flags |= ImGuiWindowFlags_NoResize;
+            if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
+            if (no_nav)             window_flags |= ImGuiWindowFlags_NoNav;
+            if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
+            if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
+            if (unsaved_document)   window_flags |= ImGuiWindowFlags_UnsavedDocument;
+            if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
+
             // Left Panel
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Left Panel");                          // Create a window called "Hello, world!" and append into it.
+            ImGuiCond cond { };
+            ImVec2 panel(width, height);
+            ImGui::SetNextWindowSize(panel, cond);
+            ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
+            ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
+                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+                ImGui::Checkbox("Another Window", &show_another_window);
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+                ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
+                if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                    counter++;
+                ImGui::SameLine();
+                ImGui::Text("counter = %d", counter);
 
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
             ImGui::End();
 
@@ -524,11 +558,13 @@ int main(int, char**)
             static float f1 = 0.0f;
             static int counter1 = 0;
 
-            ImGui::Begin("Right Panel");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::SetNextWindowSize(panel, cond);
+            ImGui::SetNextWindowPos(ImVec2(width, 0.f), cond);
+            ImGui::Begin("Right Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
+                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+                ImGui::Checkbox("Another Window", &show_another_window);
 
             ImGui::End();
 
