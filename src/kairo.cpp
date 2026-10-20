@@ -18,6 +18,7 @@
 #include "../libs/ImGUI/imgui_impl_vulkan.h"
 #include <stdio.h>          // printf, fprintf
 #include <stdlib.h>         // abort
+#include <iostream>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 
@@ -533,7 +534,9 @@ int main(int, char**)
             static int counter = 0;
 
             ImGuiCond cond { };
-            ImVec2 panel(width, height);
+            ImVec2 panel((width * main_scale/ 2.f), height);
+            std::cout << width << std::endl;
+            std::cout << "X: " << panel.x << "Y: " << panel.y << std::endl;
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
             ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
