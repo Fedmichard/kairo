@@ -496,12 +496,6 @@ int main(int, char**)
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-
-        // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window) {
-            ImGui::ShowDemoWindow(&show_demo_window);
-        }
-
         {
             static bool no_titlebar = true;
             static bool no_scrollbar = true;
@@ -534,9 +528,12 @@ int main(int, char**)
             static int counter = 0;
 
             ImGuiCond cond { };
-            ImVec2 panel((width * main_scale/ 2.f), height);
-            std::cout << width << std::endl;
-            std::cout << "X: " << panel.x << "Y: " << panel.y << std::endl;
+            int with;
+            int hight;
+            SDL_GetWindowSizeInPixels(window, &with, &hight);
+            ImVec2 panel((with / 2.f), hight);
+
+            std::cout << "Width: " << with << std::endl;
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
             ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
@@ -564,7 +561,8 @@ int main(int, char**)
             static int counter1 = 0;
 
             ImGui::SetNextWindowSize(panel, cond);
-            ImGui::SetNextWindowPos(ImVec2(width, 0.f), cond);
+            std::cout << "Width: " << with << std::endl;
+            ImGui::SetNextWindowPos(ImVec2(with / 2.f, 0.f), cond);
             ImGui::Begin("Right Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
                 ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
@@ -573,7 +571,10 @@ int main(int, char**)
 
             ImGui::End();
 
-
+            // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+            if (show_demo_window) {
+                ImGui::ShowDemoWindow(&show_demo_window);
+            }
 
             // Rendering
             ImGui::Render();
