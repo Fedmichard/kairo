@@ -16,9 +16,13 @@
 #include "../libs/ImGUI/imgui.h"
 #include "../libs/ImGUI/imgui_impl_sdl3.h"
 #include "../libs/ImGUI/imgui_impl_vulkan.h"
+#include <iomanip>
 #include <stdio.h>          // printf, fprintf
 #include <stdlib.h>         // abort
 #include <iostream>
+#include <chrono>
+#include <ctime>
+#include <cmath>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 
@@ -528,17 +532,13 @@ int main(int, char**)
             static int counter = 0;
 
             ImGuiCond cond { };
-            int with;
-            int hight;
-            SDL_GetWindowSizeInPixels(window, &with, &hight);
-            ImVec2 panel((with / 2.f), hight);
-
-            std::cout << "Width: " << with << std::endl;
+            ImVec2 panel((fb_width / 2.f), fb_height);
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
             ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
-                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+                std::chrono::time_point start { std::chrono::system_clock::now() };
+                ImGui::Text("Filler");               // Display some text (you can use a format strings too)
                 ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
                 ImGui::Checkbox("Another Window", &show_another_window);
 
@@ -561,8 +561,7 @@ int main(int, char**)
             static int counter1 = 0;
 
             ImGui::SetNextWindowSize(panel, cond);
-            std::cout << "Width: " << with << std::endl;
-            ImGui::SetNextWindowPos(ImVec2(with / 2.f, 0.f), cond);
+            ImGui::SetNextWindowPos(ImVec2(fb_width / 2.f, 0.f), cond);
             ImGui::Begin("Right Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
                 ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
