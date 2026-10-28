@@ -538,6 +538,7 @@ int main(int, char**)
             ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
                 std::chrono::time_point start { std::chrono::system_clock::now() };
+                std::chrono::duration startDuration = start.time_since_epoch();
                 ImGui::Text("Filler");               // Display some text (you can use a format strings too)
                 ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
                 ImGui::Checkbox("Another Window", &show_another_window);
