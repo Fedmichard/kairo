@@ -532,6 +532,7 @@ int main(int, char**)
             static int counter = 0;
 
             ImGuiCond cond { };
+
             ImVec2 panel((fb_width / 2.f), fb_height);
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
