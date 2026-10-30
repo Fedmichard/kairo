@@ -536,7 +536,7 @@ int main(int, char**)
             ImVec2 panel((fb_width / 2.f), fb_height);
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(0.f, 0.f), cond);
-            ImGui::Begin("Left Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Left Panel", &p_open, window_flags);
 
                 std::chrono::time_point start { std::chrono::system_clock::now() };
                 std::chrono::duration startDuration = start.time_since_epoch();
