@@ -558,17 +558,35 @@ int main(int, char**)
 
             ImGui::End();
 
-            // Right Panel
-            static float f1 = 0.0f;
-            static int counter1 = 0;
+            enum buttonStatus {
+                Start,
+                Pause,
+                Resume
+            };
 
+            // Right Panel
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(fb_width / 2.f, 0.f), cond);
             ImGui::Begin("Right Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
-                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-                ImGui::Checkbox("Another Window", &show_another_window);
+                buttonStatus buttonText = Start;
+                std::string text;
+                const char* charText = text.c_str();
+                
+                switch (buttonText) {
+                    case Start:
+                        text = "Start";
+                    case Pause:
+                        text = "Pause";
+                    case Resume:
+                        text = "Resume";
+                    default:
+                        text = "Invalid";
+                }
+
+                if (ImGui::Button(charText)) {
+                    buttonText = Pause;
+                }
 
             ImGui::End();
 
