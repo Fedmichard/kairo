@@ -457,6 +457,14 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
 
+    enum buttonStatus {
+        Start,
+        Pause,
+        Resume
+    };
+
+    buttonStatus buttonText = Start;
+
     // Main loop
     bool done = false;
     while (!done)
@@ -558,31 +566,26 @@ int main(int, char**)
 
             ImGui::End();
 
-            enum buttonStatus {
-                Start,
-                Pause,
-                Resume
-            };
+            
 
             // Right Panel
             ImGui::SetNextWindowSize(panel, cond);
             ImGui::SetNextWindowPos(ImVec2(fb_width / 2.f, 0.f), cond);
             ImGui::Begin("Right Panel", &p_open, window_flags);                          // Create a window called "Hello, world!" and append into it.
 
-                buttonStatus buttonText = Start;
                 std::string text;
-                const char* charText = text.c_str();
-                
-                switch (buttonText) {
-                    case Start:
-                        text = "Start";
-                    case Pause:
-                        text = "Pause";
-                    case Resume:
-                        text = "Resume";
-                    default:
-                        text = "Invalid";
+
+                if (buttonText == Start) {
+                    text = "Start";
+                } else if (buttonText == Pause) {
+                    text = "Paused";
+                } else if (buttonText == Resume) {
+                    text = "Resume";
+                } else {
+                    text = "Invalid";
                 }
+
+                const char* charText = text.c_str();
 
                 if (ImGui::Button(charText)) {
                     buttonText = Pause;
