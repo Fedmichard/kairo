@@ -463,7 +463,8 @@ int main(int, char**)
         Resume
     };
 
-    buttonStatus buttonText = Start;
+    buttonStatus buttonText { Start };
+    bool canEnd { true };
 
     // Main loop
     bool done = false;
@@ -579,6 +580,7 @@ int main(int, char**)
                     text = "Start";
                 } else if (buttonText == Pause) {
                     text = "Paused";
+                    canEnd = false;
                 } else if (buttonText == Resume) {
                     text = "Resume";
                 } else {
@@ -590,6 +592,14 @@ int main(int, char**)
                 if (ImGui::Button(charText)) {
                     buttonText = Pause;
                 }
+
+
+
+                ImGui::BeginDisabled(canEnd);
+                if (ImGui::Button("END SESSION")) {
+
+                }
+                ImGui::EndDisabled();
 
             ImGui::End();
 
