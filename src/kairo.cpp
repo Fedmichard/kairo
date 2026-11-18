@@ -464,7 +464,7 @@ int main(int, char**)
     };
 
     buttonStatus buttonText { Start };
-    bool canEnd { true };
+    bool endSessionIsDisabled { true };
 
     // Main loop
     bool done = false;
@@ -580,7 +580,7 @@ int main(int, char**)
                     text = "Start";
                 } else if (buttonText == Pause) {
                     text = "Paused";
-                    canEnd = false;
+                    endSessionIsDisabled = false;
                 } else if (buttonText == Resume) {
                     text = "Resume";
                 } else {
@@ -589,15 +589,28 @@ int main(int, char**)
 
                 const char* charText = text.c_str();
 
-                if (ImGui::Button(charText)) {
+                // Button Size
+                ImVec2 buttonSize{ 200, 100 };
+
+                /* returns true when clicked
+                 * returns false otherwise */
+                bool startPauseButton = ImGui::Button(charText, buttonSize);
+
+                if (startPauseButton && buttonText == Pause) {
+                    buttonText = Resume;
+                }
+
+                if (startPauseButton && buttonText == Start) {
                     buttonText = Pause;
                 }
 
-
-
-                ImGui::BeginDisabled(canEnd);
-                if (ImGui::Button("END SESSION")) {
-
+                // Have to put button in here because it'll create the button immediately
+                // Can't choose to create button and render it later unfortunately for now
+                ImGui::BeginDisabled(endSessionIsDisabled);
+                bool endSessionButton = ImGui::Button("END SESSION", buttonSize);
+                if (endSessionButton) {
+                    buttonText = Start;
+                    endSessionIsDisabled = true;
                 }
                 ImGui::EndDisabled();
 

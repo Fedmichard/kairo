@@ -12,3 +12,6 @@ Compiled logic: clang++ -std=c++23 ./src/kairo.cpp ./libs/ImGUI/imgui.cpp ./libs
       - CHAMPION I
       - DIVISION II
       - Progress bar
+
+
+Was able to get new button, need a way to save state so I can update state
