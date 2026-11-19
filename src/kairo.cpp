@@ -579,7 +579,7 @@ int main(int, char**)
                 if (buttonText == Start) {
                     text = "Start";
                 } else if (buttonText == Pause) {
-                    text = "Paused";
+                    text = "Pause";
                     endSessionIsDisabled = false;
                 } else if (buttonText == Resume) {
                     text = "Resume";
@@ -595,13 +595,25 @@ int main(int, char**)
                 /* returns true when clicked
                  * returns false otherwise */
                 bool startPauseButton = ImGui::Button(charText, buttonSize);
+                bool pressed = { false }; // bool needed for if the button was pressed or not
 
-                if (startPauseButton && buttonText == Pause) {
-                    buttonText = Resume;
-                }
+                if (startPauseButton) {
+                    pressed = true;
 
-                if (startPauseButton && buttonText == Start) {
-                    buttonText = Pause;
+                    if (buttonText == Pause && pressed == true) {
+                        buttonText = Resume;
+                        pressed = false;
+                    }
+
+                    if (buttonText == Start && pressed == true) {
+                        buttonText = Pause;
+                        pressed = false;
+                    }
+
+                    if (buttonText == Resume && pressed == true) {
+                        buttonText = Pause;
+                        pressed = false;
+                    }
                 }
 
                 // Have to put button in here because it'll create the button immediately
