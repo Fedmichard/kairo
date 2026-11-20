@@ -463,6 +463,11 @@ int main(int, char**)
         Resume
     };
 
+    struct TimeCart {
+        const char* id{};
+        const bool Delete = ImGui::Button(id);
+    };
+
     buttonStatus buttonText { Start };
     bool endSessionIsDisabled { true };
 
@@ -587,6 +592,9 @@ int main(int, char**)
                     text = "Invalid";
                 }
 
+                TimeCart first{ .id = "First" };
+                TimeCart second{ "second" };
+
                 const char* charText = text.c_str();
 
                 // Button Size
@@ -615,6 +623,7 @@ int main(int, char**)
                         pressed = false;
                     }
                 }
+            
 
                 // Have to put button in here because it'll create the button immediately
                 // Can't choose to create button and render it later unfortunately for now
