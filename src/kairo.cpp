@@ -595,6 +595,9 @@ int main(int, char**)
                 TimeCart first{ .id = "First" };
                 TimeCart second{ "second" };
                 TimeCart third{ "Third" };
+                TimeCart fourth{ .id = "fourth" };
+                TimeCart fifth{ "fifth" };
+                TimeCart sixth{ "sixth" };
 
                 const char* charText = text.c_str();
 
@@ -606,19 +609,26 @@ int main(int, char**)
                 bool startPauseButton = ImGui::Button(charText, buttonSize);
                 bool pressed = { false }; // bool needed for if the button was pressed or not
 
+                // Handle all chrono logic
                 if (startPauseButton) {
                     pressed = true;
 
+                    // If the button has the pause option, pause it
+                    // and set the text to resume
                     if (buttonText == Pause && pressed == true) {
                         buttonText = Resume;
                         pressed = false;
                     }
 
+                    // If the button text is just start, start it
+                    // and set pause option
                     if (buttonText == Start && pressed == true) {
                         buttonText = Pause;
                         pressed = false;
                     }
 
+                    // If button has resume option, resume chrono
+                    // and set button text to pause
                     if (buttonText == Resume && pressed == true) {
                         buttonText = Pause;
                         pressed = false;
