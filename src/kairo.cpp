@@ -593,11 +593,6 @@ int main(int, char**)
                 }
 
                 TimeCart first{ .id = "First" };
-                TimeCart second{ "second" };
-                TimeCart third{ "Third" };
-                TimeCart fourth{ .id = "fourth" };
-                TimeCart fifth{ "fifth" };
-                TimeCart sixth{ "sixth" };
 
                 const char* charText = text.c_str();
 
